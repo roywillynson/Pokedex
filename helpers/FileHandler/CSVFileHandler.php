@@ -28,11 +28,17 @@ class CSVFileHandler implements IFileHandler
 
         $file = fopen($path, 'w+');
 
-        foreach ($value as $object) {
-            fputcsv($file, get_object_vars($object));
+        if(!empty($value)){
+
+            foreach ($value as $object) {
+                fputcsv($file, get_object_vars($object));
+            }
+
+            fclose($file);
+
         }
 
-        fclose($file);
+        
 
     }
 
@@ -48,23 +54,49 @@ class CSVFileHandler implements IFileHandler
 
             $file = fopen($path, "r");
 
-            $csv = array();
+            $csvDecodeCon = array();
 
             if ($file !== false) { 
 
+                $csv = file_get_contents($path);
 
-                $csv = array_map('str_getcsv', file($path));
+                $csvDecodeSin = array_map('str_getcsv', explode("\n", $csv));
+                $header = array_keys((new Transaccion())->get());
+                array_pop($header);
 
-                
+                foreach ($csvDecodeSin as $value) {
+                    $csvDecodeSin  = $this->array_replace_keys($value, $header );
+
+                    if(!empty($csvDecodeSin) || count($csvDecodeSin) > 1){
+                        array_push($csvDecodeCon, $csvDecodeSin);
+                    }
+                    
+                } 
+
+                array_pop($csvDecodeCon);
+
             }
 
-
-            return $csv;
+            return $csvDecodeCon;
 
         } else {
+
             return false;
+
         }
 
+    }
+
+    private function array_replace_keys($array, $keys)
+    {
+        foreach ($keys as $search => $replace) {
+            if ( isset($array[$search])) {
+                $array[$replace] = $array[$search];
+                unset($array[$search]);
+            }
+        }
+
+        return $array;
     }
 
 }

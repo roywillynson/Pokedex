@@ -10,7 +10,6 @@ class TransaccionServiceFile implements IServiceBase
     private $fileName;
     private $directory;
     private $log;
-    
 
     //Constructores
     public function __construct($directory = "data")
@@ -122,5 +121,6 @@ class TransaccionServiceFile implements IServiceBase
         $this->log->agregar('Se Actualizo la transaccion id['.$id.']');
 
     }
+
 
 }
