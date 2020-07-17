@@ -5,6 +5,7 @@ class CSVFileHandler implements IFileHandler
 
     public $directory;
     public $fileName;
+    public $extension;
 
     public function __construct($fileName, $directory)
     {
@@ -38,8 +39,6 @@ class CSVFileHandler implements IFileHandler
 
         }
 
-        
-
     }
 
     public function ReadFile()
@@ -48,7 +47,6 @@ class CSVFileHandler implements IFileHandler
         $this->CreateDirectory();
 
         $path = $this->directory . '/' . $this->fileName . '.csv';
-        
 
         if (file_exists($path)) {
 
@@ -62,7 +60,6 @@ class CSVFileHandler implements IFileHandler
 
                 $csvDecodeSin = array_map('str_getcsv', explode("\n", $csv));
                 $header = array_keys((new Transaccion())->get());
-                array_pop($header);
 
                 foreach ($csvDecodeSin as $value) {
                     $csvDecodeSin  = $this->array_replace_keys($value, $header );
@@ -96,7 +93,8 @@ class CSVFileHandler implements IFileHandler
             }
         }
 
-        return $array;
+        return (object)$array;
     }
+
 
 }

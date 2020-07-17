@@ -122,5 +122,52 @@ class TransaccionServiceFile implements IServiceBase
 
     }
 
+    public function Import($file, $directory='tmp'){
+
+
+        $tmpName = $file['tmp_name'];
+        $fileName = $file['name'];
+
+        $extension = pathinfo($fileName, PATHINFO_EXTENSION);
+        $name = pathinfo($fileName, PATHINFO_FILENAME);
+
+
+        //Verificar que tipo de archivo tiene
+        if($extension == 'json' || $extension == 'csv' || $extension == 'txt'){
+
+            $fileHandler = null;
+            $results = array();
+
+            //elegir file handler
+            switch ($extension) {
+
+                case 'json':
+                    $fileHandler = new JsonFileHandler($name, $directory);
+                    $fileHandler->CreateDirectory();
+                    break;
+
+                case 'csv':
+                    $fileHandler = new CSVFileHandler($name, $directory);
+                    $fileHandler->CreateDirectory();
+                    break;
+
+            }
+
+            if($fileHandler !== null){
+
+                //Montar en el servidor
+                if(move_uploaded_file($tmpName, $directory.'/'.$fileName)){
+                    $results = $fileHandler->ReadFile();
+                }
+            
+            }
+
+        }
+
+        return $results;
+
+    }
+
+
 
 }

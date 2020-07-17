@@ -18,9 +18,7 @@ $service = new TransaccionServiceFile('./transacciones/data');
 
 
 $transacciones = $service->GetList();
-$traer=new CSVFileHandler('transacciones','./transacciones/data');
-var_dump($traer->ReadFile());
-var_dump(array_keys((new Transaccion())->get()));
+
 ?>
 <!-- Header -->
 <?php $layout->printHeader();?>
@@ -76,36 +74,16 @@ var_dump(array_keys((new Transaccion())->get()));
                 <?php endif ?>
             </tbody>
         </table>
-        <div class="buttons">
-            <a class="button is-success is-medium">exportar transacciones</a>
-            <a class="button is-info is-medium">importar transacciones</a>
-        </div>
+
+        <a href="transacciones/import.php" class="button is-info is-medium">importar transacciones</a>
+        <a href="transacciones/export.php" class="button is-success is-medium">exportar transacciones</a>
+
 
 
     </div>
-    <!-- MODAL -->
-    <div class="modal">
-        <div class="modal-background"></div>
-        <div class="modal-content">
 
-            <div class="file">
-                <label class="file-label">
-                    <input class="file-input" type="file" name="resume">
-                    <span class="file-cta">
-                        <span class="file-icon">
-                            <i class="fas fa-upload"></i>
-                        </span>
-                        <span class="file-label">
-                            Choose a file…
-                        </span>
-                    </span>
-                </label>
-            </div>
-
-        </div>
-        <button class="modal-close is-large" aria-label="close"></button>
-    </div>
 
 </div>
+
 <!-- Footer -->
 <?php $layout->printFooter()?>

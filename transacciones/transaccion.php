@@ -9,12 +9,10 @@ class Transaccion
     public $monto;
     public $description;
 
-    private $utilities = null;
-
     //Constructores
     public function __construct()
     {
-        $this->utilities = new Utilities();
+        
     }
 
     public function InitializeData($id, $monto, $description, $date, $time)
