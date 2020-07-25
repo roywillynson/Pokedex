@@ -97,10 +97,10 @@ class PokemonServiceDatabase implements IServiceBase
 
             fclose($photo);
 
-        }
+            //Enviar imagen
+            $stmt->send_long_data(1, $pokemon->imagen);
 
-        //Enviar imagen
-        $stmt->send_long_data(1, $pokemon->imagen);
+        }
 
         $stmt->execute();
         $stmt->close();
@@ -120,8 +120,29 @@ class PokemonServiceDatabase implements IServiceBase
     //Actualizar trpokemon
     public function Update($id, $pokemon)
     {
+
         $stmt = $this->context->db->prepare('UPDATE pokemons SET nombre = ?, imagen = ?, region = ?, tipos = ?,ataques = ? WHERE id=?');
-        $stmt->bind_param('sbssi', $pokemon->nombre, $pokemon->imagen, $pokemon->region, $pokemon->tipos, $id);
+
+        $stmt->bind_param('sbsssi', $pokemon->nombre, $pokemon->imagen, $pokemon->region, $pokemon->tipos, $pokemon->ataques, $id);
+
+        //Insertar imagen
+        if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] === 0) {
+
+            $tmpName = $_FILES['imagen']['tmp_name'];
+
+            $photo = fopen($tmpName, 'rb');
+
+            $contents = fread($photo, filesize($tmpName));
+
+            $pokemon->imagen = $contents;
+
+            fclose($photo);
+
+        }
+
+        //Enviar imagen
+        $stmt->send_long_data(1, $pokemon->imagen);
+
         $stmt->execute();
         $stmt->close();
 
