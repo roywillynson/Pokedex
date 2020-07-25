@@ -1,28 +1,30 @@
-<?php 
+<?php
 
-class JsonFileHandler implements IFileHandler{
-
+class JsonFileHandler implements IFileHandler
+{
 
     public $directory;
     public $fileName;
 
-
-    function __construct($fileName, $directory){
+    public function __construct($fileName, $directory)
+    {
         $this->directory = $directory;
         $this->fileName = $fileName;
     }
 
-    function CreateDirectory(){
-        if(!file_exists($this->directory)){
-            mkdir($this->directory,0777,true);
+    public function CreateDirectory()
+    {
+        if (!file_exists($this->directory)) {
+            mkdir($this->directory, 0777, true);
         }
     }
 
-    function SaveFile($value){
+    public function SaveFile($value)
+    {
 
         $this->CreateDirectory();
 
-        $path = $this->directory.'/'.$this->fileName.'.json';
+        $path = $this->directory . '/' . $this->fileName . '.json';
 
         $serializeData = json_encode($value);
 
@@ -30,21 +32,34 @@ class JsonFileHandler implements IFileHandler{
 
     }
 
-    function ReadFile(){
+    public function ReadFile()
+    {
 
         $this->CreateDirectory();
 
-        $path = $this->directory.'/'.$this->fileName.'.json';
-        
-        if(file_exists($path)){
+        $path = $this->directory . '/' . $this->fileName . '.json';
+
+        if (file_exists($path)) {
             $contents = file_get_contents($path);
             return json_decode($contents);
-        }else{
+        } else {
+            return false;
+        }
+
+    }
+
+    public function ReadConfiguration()
+    {
+
+        $path = $this->directory . '/' . $this->fileName . '.json';
+
+        if (file_exists($path)) {
+            $contents = file_get_contents($path);
+            return json_decode($contents);
+        } else {
             return false;
         }
 
     }
 
 }
-
-?>

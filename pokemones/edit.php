@@ -1,39 +1,39 @@
 <?php
 require_once '../helpers/utilities.php';
 require_once '../layout/layout.php';
-require_once './transaccion.php';
+require_once './pokemon.php';
 require_once '../services/IServiceBase.php';
-require_once './TransaccionServiceCookie.php';
 require_once '../helpers/FileHandler/IFileHandler.php';
 require_once '../helpers/FileHandler/JsonFileHandler.php';
-require_once '../helpers/FileHandler/SerializationFileHandler.php';
-require_once '../helpers/FileHandler/CSVFileHandler.php';
-require_once './TransaccionServiceFile.php';
-require_once './log.php';
+require_once '../database/PokemonsContext.php';
+require_once './PokemonServiceDatabase.php';
 
-$layout = new Layout(true);
-$service = new TransaccionServiceFile();
+$layout = new Layout();
+$service = new PokemonServiceDatabase('../database');
+
 $utilities = new Utilities();
 
 if (isset($_GET['id'])) {
 
-    $transaccionId = $_GET['id'];
-    $transaccion = $service->GetById($transaccionId);
+    $pokemonId = $_GET['id'];
+    $pokemon = $service->GetById($pokemonId);
 
-    if (isset($_POST['monto']) && isset($_POST['description'])) {
+    if (isset($_POST['nombre']) && isset($_POST['region']) && isset($_POST['tipos'])) {
 
+        $pokemonUpdated = new Pokemon();
 
-        $transaccionUpdated = new Transaccion();
+        $imagen = addslashes(file_get_contents($_FILES['imagen']['tmp_name'])); //Imagen Blob
 
-        $transaccionUpdated->InitializeData(
-            $transaccionId,
-            $_POST['monto'],
-            $_POST['description'],
-            $transaccion->date,
-            $transaccion->time
+        $pokemonUpdated->InitializeData(
+            $pokemonId,
+            $_POST['nombre'],
+            $imagen,
+            $_POST['region'],
+            $_POST['tipos'],
+            null
         );
 
-        $service->Update($transaccionId, $transaccionUpdated);
+        $service->Update($pokemonId, $pokemonUpdated);
 
         header('Location: ../index.php'); //Back Home
         exit();
@@ -54,12 +54,12 @@ if (isset($_GET['id'])) {
 <!-- Page Content -->
 <div class="container my-5">
     <div>
-        <a href="../" class="button is-primary is-medium">Volver</a>
+        <a href="list.php" class="button is-primary is-medium">Volver</a>
     </div>
 
     <hr>
 
-    <form action="edit.php?id=<?php echo $transaccion->id; ?>" method="POST">
+    <form action="edit.php?id=<?php echo $pokemon->id; ?>" method="POST" enctype="multipart/form-data">
         <div class="panel is-dark">
             <!-- TITULO -->
             <p class="panel-heading">

@@ -8,11 +8,11 @@ class Layout
     public $onDirectory;
 
     //Constructor
-    public function __construct($onDirectory)
+    public function __construct($onDirectory = false)
     {
 
         $this->onDirectory = $onDirectory;
-        $this->directory = ($this->onDirectory) ? "../" : "";
+        $this->directory = ($this->onDirectory) ? "" : "../";
 
     }
 
@@ -40,7 +40,7 @@ class Layout
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
   <!-- Bulma CSS -->
   <link href="{$this->directory}vendor/bulma/css/bulma.css" rel="stylesheet">
-  
+
   <style>
   body{
       font-family: 'Roboto';
@@ -60,11 +60,11 @@ class Layout
 <body>
 
   <!-- Navigation -->
-  <nav class="navbar is-black" role="navigation" aria-label="main navigation">
+  <nav class="navbar is-danger" role="navigation" aria-label="main navigation">
   <div class="container">
     <div class="navbar-brand">
-      <a class="navbar-item" href="https://bulma.io">
-        <h1 class="is-size-4">Transcash</h1>
+      <a href="{$this->directory}index.php" class="navbar-item py-0" >
+        <img src="{$this->directory}assets/img/pokeball.png" width="40px" height="40px" style="object-fit: cover" alt="pokeball"></img>
       </a>
 
       <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
@@ -74,7 +74,7 @@ class Layout
       </a>
     </div>
   </div>
-  
+
 </nav>
 EOF;
 

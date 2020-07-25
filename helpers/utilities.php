@@ -2,10 +2,19 @@
 
 class Utilities
 {
-   
-    public function getArrayConcatenado($elements)
+
+    public function joinArray($elements, $delimiter = '/')
     {
-        return implode(",", $elements);
+        if (count($elements) === 1) {
+            return $elements[0];
+        }
+
+        return implode($delimiter, $elements);
+    }
+
+    public function splitArray($elements, $delimiter = '/')
+    {
+        return explode($delimiter, $elements);
     }
 
     public function getLastArrayElement($elements)
@@ -13,7 +22,6 @@ class Utilities
         $lastElement = $elements[count($elements) - 1];
         return $lastElement;
     }
-
 
     public function filterByProperty($elements, $property, $value)
     {
@@ -47,14 +55,13 @@ class Utilities
         return time() + 60 * 60 * 24 * 30; //Un mes de la cookie
     }
 
-
-    public function getCurrentDateTime($format = 'd/m/Y H:i:s'){
+    public function getCurrentDateTime($format = 'd/m/Y H:i:s')
+    {
 
         $currentDateTime = new DateTime('now', new DateTimeZone('America/Santo_Domingo'));
 
         return $currentDateTime->format($format);
-       
-    }
 
+    }
 
 }
