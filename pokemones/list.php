@@ -16,8 +16,6 @@ $utilities = new Utilities();
 
 $pokemones = $service->GetList();
 
-var_dump($pokemones);
-
 ?>
 <!-- Header -->
 <?php $layout->printHeader();?>
@@ -60,7 +58,9 @@ var_dump($pokemones);
                     <th><?php echo $pokemon->id; ?></th>
                     <td><?php echo $pokemon->nombre; ?></td>
                     <td>
-                        <img src="data:image/png;base64, <?php echo $pokemon->getImage64(); ?>" alt="Imagen">
+                        <figure class="image is-square">
+                            <img style=""class="is-rounded" src="data:image/png;base64, <?php echo $pokemon->getImage64(); ?>" alt="Imagen">
+                        </figure>
                     </td>
                     <td><?php echo $pokemon->region; ?></td>
                     <td><?php echo $pokemon->tipos; ?></td>

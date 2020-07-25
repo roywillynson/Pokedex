@@ -81,9 +81,27 @@ class PokemonServiceDatabase implements IServiceBase
     {
 
         $stmt = $this->context->db->prepare('INSERT INTO pokemons (nombre,imagen ,region, tipos, ataques) VALUES (?,?,?,?,?)');
-        $null = null;
-        $stmt->bind_param('sbsss', $pokemon->nombre, $null, $pokemon->region, $pokemon->tipos, $pokemon->ataques);
+
+        $stmt->bind_param('sbsss', $pokemon->nombre, $pokemon->imagen, $pokemon->region, $pokemon->tipos, $pokemon->ataques);
+
+        //Insertar imagen
+        if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] === 0) {
+
+            $tmpName = $_FILES['imagen']['tmp_name'];
+
+            $photo = fopen($tmpName, 'rb');
+
+            $contents = fread($photo, filesize($tmpName));
+
+            $pokemon->imagen = $contents;
+
+            fclose($photo);
+
+        }
+
+        //Enviar imagen
         $stmt->send_long_data(1, $pokemon->imagen);
+
         $stmt->execute();
         $stmt->close();
 

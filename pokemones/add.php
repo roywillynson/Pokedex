@@ -33,23 +33,12 @@ if (isset($_POST['nombre']) && isset($_POST['region']) && isset($_POST['tipos'])
 
     $pokemonUpdated = new Pokemon();
 
-    $imagen = null;
-    if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] === 0) {
-        $imagen = addslashes(file_get_contents($_FILES['imagen']['tmp_name'])); //Imagen Blob
-
-    }
-
-    var_dump(file_get_contents($_FILES['imagen']['tmp_name']));
-    var_dump(addslashes(file_get_contents($_FILES['imagen']['tmp_name'])));
-
-    exit();
-
     $tipos = $utilities->joinArray($_POST['tipos']);
 
     $pokemonUpdated->InitializeData(
         0,
         $_POST['nombre'],
-        $imagen,
+        null,
         $_POST['region'],
         $tipos,
         null
