@@ -79,6 +79,11 @@ $pokemones = $service->GetList();
             </tbody>
         </table>
 
+        <div class="field">
+            <input id="switchExample" type="checkbox" name="switchExample" class="switch" checked="checked">
+            <label for="switchExample">Thumbnails Mode</label>
+        </div>
+
     </div>
 
 
