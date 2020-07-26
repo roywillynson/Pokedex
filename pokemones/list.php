@@ -154,7 +154,7 @@ $pokemones = $service->GetList();
                 </div>
 
                 <footer class="card-footer">
-                    <a href="delete.php?id=<?php echo $pokemon->id; ?>"
+                    <a href="delete.php?id=<?php echo $pokemon->id; ?>&mode=<?php echo ($utilities->hasThumbnailsMode()) ? 'true' : 'false'; ?>"
                             class="card-footer-item">Eliminar</a>
                     <a href="edit.php?id=<?php echo $pokemon->id; ?>"
                             class="card-footer-item">Editar</a>

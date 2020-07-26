@@ -18,5 +18,12 @@ if (isset($_GET['id'])) {
 
 }
 
-header('Location: ./list.php?mode=' . ($_GET['mode']));
+if (isset($_GET['mode'])) {
+    $mode = ($_GET['mode']);
+
+    header('Location: ./list.php?mode=' . $mode);
+    exit();
+}
+
+header('Location: ./list.php');
 exit();
