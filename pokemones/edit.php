@@ -26,12 +26,14 @@ if (isset($_GET['id'])) {
 
     $pokemonId = $_GET['id'];
     $pokemon = $service->GetById($pokemonId);
+    $pokemon->ataques = $utilities->splitString($pokemon->ataques);
 
-    if (isset($_POST['nombre']) && isset($_POST['region']) && isset($_POST['tipos'])) {
+    if (isset($_POST['nombre']) && isset($_POST['region']) && isset($_POST['tipos']) && isset($_POST['ataques'])) {
 
         $pokemonUpdated = new Pokemon();
 
         $tipos = $utilities->joinArray($_POST['tipos']);
+        $ataques = $utilities->joinArray($_POST['ataques']);
 
         $pokemonUpdated->InitializeData(
             $pokemonId,
@@ -39,7 +41,7 @@ if (isset($_GET['id'])) {
             $pokemon->imagen,
             $_POST['region'],
             $tipos,
-            null
+            $ataques
         );
 
         $service->Update($pokemonId, $pokemonUpdated);
@@ -109,7 +111,7 @@ if (isset($_GET['id'])) {
                     <div class="control">
                         <div class="label">Tipos:</div>
                         <?php foreach ($tipos as $tipo): ?>
-                            <?php if (in_array($tipo->tipo, $utilities->splitArray($pokemon->tipos))): ?>
+                            <?php if (in_array($tipo->tipo, $utilities->splitString($pokemon->tipos))): ?>
                             <label class="checkbox mr-4">
                                 <input type="checkbox" value="<?php echo $tipo->tipo; ?>" name="tipos[]" checked>
                                 <?php echo $tipo->tipo; ?>
@@ -150,11 +152,21 @@ if (isset($_GET['id'])) {
                     </div>
                 </div>
 
+                <!-- CAMPO TAGS ATAQUES -->
+                <div class="field">
+                    <label class="label" for="ataque">Ataques:</label>
+                    <div class="control">
+                        <input class="input" name="ataques[]" value="<?php echo isset($pokemon->ataques[0]) ? $pokemon->ataques[0] : ''; ?>" type="text" placeholder="Ataque 1 (obligatorio)" required >
+                        <input class="input" name="ataques[]" value="<?php echo isset($pokemon->ataques[1]) ? $pokemon->ataques[1] : ''; ?>" type="text" placeholder="Ataque 2 (opcional)" >
+                        <input class="input" name="ataques[]" value="<?php echo isset($pokemon->ataques[2]) ? $pokemon->ataques[2] : ''; ?>" type="text" placeholder="Ataque 3 (opcional)" >
+                        <input class="input" name="ataques[]" value="<?php echo isset($pokemon->ataques[3]) ? $pokemon->ataques[3] : ''; ?>" type="text" placeholder="Ataque 4 (opcional)" >
+                    </div>
+                </div>
 
 
                 <div class="field is-grouped">
                     <div class="control">
-                        <button type="submit" class="button is-link">Agregar</button>
+                        <button type="submit" class="button is-link">Actualizar</button>
                     </div>
                     <div class="control">
                         <a href="list.php" class="button is-link is-light">Cancel</a>

@@ -29,11 +29,12 @@ var_dump($tipos);
 
 $utilities = new Utilities();
 
-if (isset($_POST['nombre']) && isset($_POST['region']) && isset($_POST['tipos'])) {
+if (isset($_POST['nombre']) && isset($_POST['region']) && isset($_POST['tipos']) && isset($_POST['ataques'])) {
 
     $pokemonUpdated = new Pokemon();
 
     $tipos = $utilities->joinArray($_POST['tipos']);
+    $ataques = $utilities->joinArray($_POST['ataques']);
 
     $pokemonUpdated->InitializeData(
         0,
@@ -41,7 +42,7 @@ if (isset($_POST['nombre']) && isset($_POST['region']) && isset($_POST['tipos'])
         null,
         $_POST['region'],
         $tipos,
-        null
+        $ataques
     );
 
     $servicePokemon->Add($pokemonUpdated);
@@ -54,7 +55,6 @@ if (isset($_POST['nombre']) && isset($_POST['region']) && isset($_POST['tipos'])
 
 <?php $layout->printHeader();?>
 <!-- Page Content -->
-<?php if (!empty($regiones) || !empty($tipos)): ?>
 
 <div class="container my-5">
     <div>
@@ -122,6 +122,16 @@ if (isset($_POST['nombre']) && isset($_POST['region']) && isset($_POST['tipos'])
                     </div>
                 </div>
 
+                <!-- CAMPO TAGS ATAQUES -->
+                <div class="field">
+                    <label class="label" for="ataque">Ataques:</label>
+                    <div class="control">
+                        <input class="input" name="ataques[]" type="text" placeholder="Ataque 1 (obligatorio)" required >
+                        <input class="input" name="ataques[]" type="text" placeholder="Ataque 2 (opcional)" >
+                        <input class="input" name="ataques[]" type="text" placeholder="Ataque 3 (opcional)" >
+                        <input class="input" name="ataques[]" type="text" placeholder="Ataque 4 (opcional)" >
+                    </div>
+                </div>
 
 
                 <div class="field is-grouped">
@@ -139,6 +149,7 @@ if (isset($_POST['nombre']) && isset($_POST['region']) && isset($_POST['tipos'])
 </div>
 
 <script type="text/javascript">
+
     document.addEventListener('DOMContentLoaded', function (e) {
 
         $inputFile = document.getElementById('imagen-file');
@@ -154,7 +165,4 @@ if (isset($_POST['nombre']) && isset($_POST['region']) && isset($_POST['tipos'])
     });
 </script>
 
-<?php else: ?>
-<h2>Crea Regiones y Tipos para poder crear pokemon!!</h2>
-<?php endif?>
 <?php $layout->printFooter()?>

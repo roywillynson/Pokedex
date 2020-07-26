@@ -34,13 +34,13 @@ class Layout
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Registro de Estudiantes</title>
+  <title>Pokedex</title>
 
   <!-- Google Fonts Roboto -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
   <!-- Bulma CSS -->
   <link href="{$this->directory}vendor/bulma/css/bulma.css" rel="stylesheet">
-  <link href="{$this->directory}vendor/bulma/css/bulma-switch.min.css" rel="stylesheet">
+
 
   <style>
   body{

@@ -9,12 +9,14 @@ class Utilities
             return $elements[0];
         }
 
-        return implode($delimiter, $elements);
+        $elementsFilter = array_filter($elements);
+
+        return implode($delimiter, $elementsFilter);
     }
 
-    public function splitArray($elements, $delimiter = '/')
+    public function splitString($cadena, $delimiter = '/')
     {
-        return explode($delimiter, $elements);
+        return explode($delimiter, $cadena);
     }
 
     public function getLastArrayElement($elements)
@@ -50,11 +52,6 @@ class Utilities
         return $index;
     }
 
-    public function GetCookieTime()
-    {
-        return time() + 60 * 60 * 24 * 30; //Un mes de la cookie
-    }
-
     public function getCurrentDateTime($format = 'd/m/Y H:i:s')
     {
 
@@ -62,6 +59,19 @@ class Utilities
 
         return $currentDateTime->format($format);
 
+    }
+
+    public function hasThumbnailsMode()
+    {
+        session_start(); //abrir session
+
+        if (isset($_SESSION['thumbnailsMode'])) {
+
+            return filter_var($_SESSION['thumbnailsMode'], FILTER_VALIDATE_BOOLEAN);
+
+        }
+
+        return false;
     }
 
 }
