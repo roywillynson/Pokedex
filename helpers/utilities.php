@@ -3,7 +3,7 @@
 class Utilities
 {
 
-    public function joinArray($elements, $delimiter = '/')
+    public function joinArray($elements, $delimiter = ' / ')
     {
         if (count($elements) === 1) {
             return $elements[0];
@@ -14,7 +14,7 @@ class Utilities
         return implode($delimiter, $elementsFilter);
     }
 
-    public function splitString($cadena, $delimiter = '/')
+    public function splitString($cadena, $delimiter = ' / ')
     {
         return explode($delimiter, $cadena);
     }
@@ -63,15 +63,21 @@ class Utilities
 
     public function hasThumbnailsMode()
     {
-        session_start(); //abrir session
+        if (session_status() !== PHP_SESSION_ACTIVE) {
+            session_start();
+        }
 
-        if (isset($_SESSION['thumbnailsMode'])) {
+        if (isset($_GET['mode'])) {
 
-            return filter_var($_SESSION['thumbnailsMode'], FILTER_VALIDATE_BOOLEAN);
+            $_SESSION['thumbnailsMode'] = ($_GET['mode'] == 'false') ? false : true;
+            return $_SESSION['thumbnailsMode'];
+
+        } else {
+            $_SESSION['thumbnailsMode'] = false;
+            return false;
 
         }
 
-        return false;
     }
 
 }

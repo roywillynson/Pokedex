@@ -8,6 +8,7 @@ require_once '../database/PokemonsContext.php';
 require_once './PokemonServiceDatabase.php';
 
 $service = new PokemonServiceDatabase('../database');
+$utilities = new Utilities();
 
 if (isset($_GET['id'])) {
 
@@ -17,5 +18,5 @@ if (isset($_GET['id'])) {
 
 }
 
-header('Location: ./list.php');
+header('Location: ./list.php?mode=' . ($_GET['mode']));
 exit();

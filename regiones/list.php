@@ -31,7 +31,7 @@ $regiones = $service->GetList();
     <hr>
 
     <div class="table-container">
-        <table class="table is-fullwidth is-bordered is-striped has-text-centered">
+        <table class="table is-fullwidth is-bordered is-striped has-text-centered is-size-5">
             <thead>
                 <tr>
                     <th class="is-dark">Id</th>
@@ -56,9 +56,9 @@ $regiones = $service->GetList();
                     <td><?php echo $region->region; ?></td>
                     <td>
                         <a href="delete.php?id=<?php echo $region->id; ?>"
-                            class="button is-danger is-rounded">Eliminar</a>
+                            class="button is-medium is-danger is-rounded">Eliminar</a>
                         <a href="edit.php?id=<?php echo $region->id; ?>"
-                            class="button is-warning is-rounded">Editar</a>
+                            class="button is-medium is-warning is-rounded">Editar</a>
                     </td>
                 </tr>
                 <?php endforeach?>
